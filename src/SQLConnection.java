@@ -26,11 +26,6 @@ class SQLConnection {
 		
 		
 		
-		
-		
-		
-		
-		
 		String query = "select *from student"; // query to be run
 		Class.forName("com.mysql.cj.jdbc.Driver"); // Driver name
 		
@@ -47,7 +42,6 @@ class SQLConnection {
 
             System.out.println("-----------------------");
         
-		//String name = rs.getString("name"); // Retrieve name from db
 		}
 
 		st.close(); // close statement
