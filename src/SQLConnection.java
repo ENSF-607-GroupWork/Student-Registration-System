@@ -19,20 +19,40 @@ class SQLConnection {
 	public static void main(String[] args) throws Exception
 	{
 		String url= "jdbc:mysql://localhost:3306/607_assignment3"; // table details
-		String username = "root"; // MySQL credentials
+		
+		//MySQL Credentials
+		String username = "root";
 		String password = "WxIZz9vVrEH9";
-		String query = "select *from students"; // query to be run
+		
+		
+		
+		
+		
+		
+		
+		
+		String query = "select *from student"; // query to be run
 		Class.forName("com.mysql.cj.jdbc.Driver"); // Driver name
+		
 		Connection con = DriverManager.getConnection( url, username, password);
 		System.out.println("Connection Established successfully");
+		
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(query); // Execute query
-		rs.next();
-		String name = rs.getString("name"); // Retrieve name from db
+		while ( rs.next() ) {
+			
+            int studentId = rs.getInt("studentId");
 
-		System.out.println(name); // Print result on console
+            System.out.println("Student ID: " + studentId);
+
+            System.out.println("-----------------------");
+        
+		//String name = rs.getString("name"); // Retrieve name from db
+		}
+
 		st.close(); // close statement
 		con.close(); // close connection
 		System.out.println("Connection Closed....");
+	
 	}
 }
