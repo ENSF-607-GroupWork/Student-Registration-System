@@ -1,92 +1,86 @@
-// This code is for establishing connection with MySQL
-// database and retrieving data
-// from db Java Database connectivity
-
-/*
-*1. import --->java.sql
-*2. load and register the driver ---> com.jdbc.
-*3. create connection
-*4. create a statement
-*5. execute the query
-*6. process the results
-*7. close
-*/
-
-import java.io.*;
+// SQLConnection.java
 import java.sql.*;
 
-class SQLConnection {
-	public static void main(String[] args) throws Exception
-	{
-		try {
-			String url= "jdbc:mysql://localhost:3306/607_assignment3"; // URL for database location
-			Class.forName("com.mysql.cj.jdbc.Driver"); // Driver name
-			
-			//MySQL Credentials
-			String username = "root"; //username credentials
-			String password = "WxIZz9vVrEH9"; //password credentials
-			
-			String query1 = "select *from student"; //QUERY Number 1 - Get all students
-			String query2 = "select *from course"; //QUERY Number 2 - Get all courses
-			String query3 = "select *from registration"; //QUERY Number 3 - Get all registrations
-			
-			Connection con = DriverManager.getConnection(url, username, password);
-			System.out.println("Connection Established successfully"); //prints if the connection was successful
-			Statement st1 = con.createStatement(); //create statement for students database
-			Statement st2 = con.createStatement(); //create statement for courses database
-			Statement st3 = con.createStatement(); //create statement for registrations database
-			
-			ResultSet rs1 = st1.executeQuery(query1); //Query the students database for all students 
-			ResultSet rs2 = st2.executeQuery(query2); //Query the courses database for all courses 
-			ResultSet rs3 = st3.executeQuery(query3);//Query the registration atabase for all registrations 
-			
+/**
+ * This Java program demonstrates connecting to a MySQL database,
+ * executing queries, and retrieving data from the database.
+ */
+public class SQLConnection {
+    public static void main(String[] args) throws Exception {
+        try {
+            // Define the URL of the MySQL database
+            String url = "jdbc:mysql://localhost:3306/607_assignment3"; // Database URL
 
-			//EXECUTE and print results for Query #1 - Students Table
-	        System.out.println("PRINTING ENTIRE STUDENT TABLE BELOW");
-			while ( rs1.next() ) {
-	            String studentId = rs1.getString("studentId");
-	            String FirstName = rs1.getString("FirstName");
-	            String LastName = rs1.getString("LastName");
-	            String Location = rs1.getString("Location");
+            // Load and register the MySQL driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
-	            System.out.println("Student ID: " + studentId + " | First Name: " + FirstName + " | Last Name: " + LastName +  " | Location: " + Location);
-			}
-	        System.out.println("-----------------------"); //delimeter between tables
+            // Set MySQL database credentials
+            String username = "root"; // Database username
+            String password = "WxIZz9vVrEH9"; // Database password
 
-	        
-			//EXECUTE and print results for Query #2 - Course Table
-	        System.out.println("PRINTING ENTIRE COURSE TABLE BELOW");
-			while ( rs2.next() ) {
-	            String CourseId = rs2.getString("courseId");
-	            String CourseName = rs2.getString("CourseName");
-	            String CourseTitle = rs2.getString("CourseTitle");
+            // Define SQL queries
+            String query1 = "SELECT * FROM student"; // Query #1: Get all students
+            String query2 = "SELECT * FROM course"; // Query #2: Get all courses
+            String query3 = "SELECT * FROM registration"; // Query #3: Get all registrations
 
-	            System.out.println("Course ID: " + CourseId + " | Course Name: " + CourseName + " | Course Title: " + CourseTitle);
-			}
-	        System.out.println("-----------------------"); //delimeter between tables
+            // Establish a connection to the database
+            Connection con = DriverManager.getConnection(url, username, password);
+            System.out.println("Connection established successfully"); // Print connection status
 
-			
-			//EXECUTE and print results for Query #3 - Registration Table
-	        System.out.println("PRINTING ENTIRE REGISTRATION TABLE BELOW");
-			while ( rs3.next() ) {
-	            String RegistrationId = rs3.getString("RegistrationId");
-	            String StudentId = rs3.getString("StudentId");
-	            String CourseId = rs3.getString("CourseId");
+            // Create statements for executing SQL queries
+            Statement st1 = con.createStatement(); // Statement for the students table
+            Statement st2 = con.createStatement(); // Statement for the courses table
+            Statement st3 = con.createStatement(); // Statement for the registrations table
 
-	            System.out.println("Registration ID: " + RegistrationId + " | Student ID: " + StudentId + " | Course ID: " + CourseId);
-			} 
-	        System.out.println("-----------------------"); //delimeter between tables
+            // Execute SQL queries and retrieve result sets
+            ResultSet rs1 = st1.executeQuery(query1); // Execute Query #1: Students table
+            ResultSet rs2 = st2.executeQuery(query2); // Execute Query #2: Courses table
+            ResultSet rs3 = st3.executeQuery(query3); // Execute Query #3: Registrations table
 
-			st1.close(); // close statement 1
-			st2.close(); // close statement 2
-			st3.close(); // close statement 3
-			con.close(); // close connection with the database
-			System.out.println("Connection Closed...."); //print that the connection has been closed
+            // Print results for Query #1 - Students Table
+            System.out.println("PRINTING ENTIRE STUDENT TABLE BELOW");
+            while (rs1.next()) {
+                String studentId = rs1.getString("studentId");
+                String firstName = rs1.getString("FirstName");
+                String lastName = rs1.getString("LastName");
+                String location = rs1.getString("Location");
 
-		} catch (SQLException e) {
+                System.out.println("Student ID: " + studentId + " | First Name: " + firstName + " | Last Name: " + lastName + " | Location: " + location);
+            }
+            System.out.println("-----------------------"); // Delimiter between tables
 
-			e.printStackTrace(); //print error message if the connection was not established successfully
-		}
-	
-	} 
-} 
+            // Print results for Query #2 - Course Table
+            System.out.println("PRINTING ENTIRE COURSE TABLE BELOW");
+            while (rs2.next()) {
+                String courseId = rs2.getString("courseId");
+                String courseName = rs2.getString("CourseName");
+                String courseTitle = rs2.getString("CourseTitle");
+
+                System.out.println("Course ID: " + courseId + " | Course Name: " + courseName + " | Course Title: " + courseTitle);
+            }
+            System.out.println("-----------------------"); // Delimiter between tables
+
+            // Print results for Query #3 - Registration Table
+            System.out.println("PRINTING ENTIRE REGISTRATION TABLE BELOW");
+            while (rs3.next()) {
+                String registrationId = rs3.getString("RegistrationId");
+                String studentId = rs3.getString("StudentId");
+                String courseId = rs3.getString("CourseId");
+
+                System.out.println("Registration ID: " + registrationId + " | Student ID: " + studentId + " | Course ID: " + courseId);
+            }
+            System.out.println("-----------------------"); // Delimiter between tables
+
+            // Close statements and the database connection
+            st1.close(); // Close statement 1
+            st2.close(); // Close statement 2
+            st3.close(); // Close statement 3
+            con.close(); // Close the database connection
+            System.out.println("Connection closed...."); // Print that the connection has been closed
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Print an error message if the connection was not established successfully
+        }
+    }
+}
+
