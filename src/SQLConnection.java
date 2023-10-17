@@ -21,7 +21,6 @@ class SQLConnection {
 		try {
 			String url= "jdbc:mysql://localhost:3306/607_assignment3"; // URL for database location
 			Class.forName("com.mysql.cj.jdbc.Driver"); // Driver name
-
 			
 			//MySQL Credentials
 			String username = "root"; //username credentials
